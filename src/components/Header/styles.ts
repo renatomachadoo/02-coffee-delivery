@@ -11,6 +11,7 @@ export const HeaderContainer = styled.header`
 
     > img {
         height: 2.5rem;
+        cursor: pointer;
     }
 
     .actions{
