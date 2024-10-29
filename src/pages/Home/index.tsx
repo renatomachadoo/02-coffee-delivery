@@ -1,11 +1,11 @@
-import { HomeContainer, AboutContainer } from "./styles"
+import { HomeContainer, AboutContainer, CoffeeGrid } from "./styles"
 
 import coffeeDeliveryBanner from "../../assets/coffee-delivery-banner.svg"
 
 import { BackgroundIcon } from "../../components/BackgroundIcon"
 
 import { ShoppingCart, Timer, Package, Coffee } from "@phosphor-icons/react"
-
+import { CoffeeCard } from "./Components/CoffeeCard"
 
 export function Home(){
     return(
@@ -41,6 +41,16 @@ export function Home(){
                     <img src={coffeeDeliveryBanner} alt="Copo de café com o logo da CoffeeDelivery" />
                 </div>
             </AboutContainer>
+            <CoffeeGrid>
+                <h2>Nossos cafés</h2>
+                <main>
+                    <CoffeeCard />
+                    <CoffeeCard />
+                    <CoffeeCard />
+                    <CoffeeCard />
+                    <CoffeeCard />
+                </main>
+            </CoffeeGrid>
         </HomeContainer>
     )
 }

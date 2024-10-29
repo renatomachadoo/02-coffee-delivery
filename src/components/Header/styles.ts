@@ -47,6 +47,8 @@ export const CartButton = styled(BaseButton)`
 
     position: relative;
 
+    cursor: pointer;
+
     > span {
         position: absolute;
         border-radius: 50%;

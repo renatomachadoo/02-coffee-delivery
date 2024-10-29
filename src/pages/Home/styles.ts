@@ -53,3 +53,24 @@ export const AboutContainer = styled.div`
         }
     }
 `
+
+export const CoffeeGrid = styled.div`
+    display: flex;
+    flex-direction: column;
+    padding: 2rem 0 10rem;
+    gap: 3.375rem;
+
+    > h2 {
+        color: ${(props) => props.theme["base-subtitle"]};
+        font-family: "Baloo 2", serif;
+        font-size: 2rem;
+        font-weight: 800;
+    }
+
+    > main {
+        display: grid;
+        column-gap: 2rem;
+        row-gap: 2.5rem;
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+    }
+`
