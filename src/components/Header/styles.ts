@@ -23,7 +23,6 @@ export const HeaderContainer = styled.header`
 
 const BaseButton = styled.button`
     border: none;
-    outline: none;
 
     display: flex;
     align-items: center;
@@ -35,6 +34,7 @@ const BaseButton = styled.button`
 
 export const LocationButton = styled(BaseButton)`
     gap: 0.25rem;
+    outline: none;
 
     background: ${(props) => props.theme["purple-100"]};
     color: ${(props) => props.theme["purple-900"]};

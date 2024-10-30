@@ -16,13 +16,13 @@ export function Header(){
 
     return (
         <HeaderContainer>
-            <img onClick={handleNavigateToHomePage} src={coffeeDeliveryLogo} alt="Um copo roxo de café com o texto Coffee Delivery" />
+            <img title="Homepage" onClick={handleNavigateToHomePage} src={coffeeDeliveryLogo} alt="Um copo roxo de café com o texto Coffee Delivery" />
             <div className="actions">
                 <LocationButton>
                     <MapPin size={22} weight="fill" />
                     Porto Alegre, RS
                 </LocationButton>
-                <CartButton onClick={handleNavigateToCheckoutPage}>
+                <CartButton title="View Cart" onClick={handleNavigateToCheckoutPage}>
                     <ShoppingCart size={22} weight="fill" />
                     <span>
                         3

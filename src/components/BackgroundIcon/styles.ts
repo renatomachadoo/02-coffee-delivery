@@ -1,3 +1,4 @@
+import { IconProps } from "@phosphor-icons/react";
 import styled from "styled-components";
 
 const BACKGROUND_COLORS = {
@@ -7,7 +8,7 @@ const BACKGROUND_COLORS = {
     gray: "base-text"
 } as const
 
-export interface BackgroundProps {
+export interface BackgroundProps extends IconProps{
     backgroundColor: keyof typeof BACKGROUND_COLORS
 }
 

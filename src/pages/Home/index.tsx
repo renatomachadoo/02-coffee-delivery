@@ -20,19 +20,19 @@ export function Home(){
                     </p>
                     <div className="benefits-grid">
                         <div>
-                            <BackgroundIcon backgroundColor="darkYellow" icon={ShoppingCart} />
+                            <BackgroundIcon backgroundColor="darkYellow" icon={ShoppingCart} weight="fill" />
                             Compra simples e segura
                         </div>
                         <div>
-                            <BackgroundIcon backgroundColor="gray" icon={Package}/>
+                            <BackgroundIcon backgroundColor="gray" icon={Package} weight="fill"/>
                             Embalagem mantém o café intacto
                         </div>
                         <div>
-                            <BackgroundIcon backgroundColor="yellow" icon={Timer}/>
+                            <BackgroundIcon backgroundColor="yellow" icon={Timer} weight="fill"/>
                             Entrega rápida e rastreada
                         </div>
                         <div>
-                            <BackgroundIcon backgroundColor="purple" icon={Coffee}/>
+                            <BackgroundIcon backgroundColor="purple" icon={Coffee} weight="fill"/>
                             O café chega fresquinho até você
                         </div>
                     </div>
