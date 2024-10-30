@@ -1,26 +1,40 @@
+import { useContext } from "react"
+import { CoffeesContext } from "../../../../contexts/CoffeeContext"
+
 import { CoffeeInCartContainer, RemoveButton } from "./styles"
 import { InputNumber } from "../../../../components/InputNumber"
 
-import CoffeeImg from "../../../../assets/coffees/Coffee.svg"
+import { Coffee } from "../../../../contexts/CoffeeContext"
 
 import { Trash } from "@phosphor-icons/react"
 
-export function CoffeeInCart(){
+interface CoffeeInCartProps {
+    data : Coffee
+}
+
+export function CoffeeInCart({data}: CoffeeInCartProps){
+    const { removeCoffeeFromCart } = useContext(CoffeesContext)
+
+    function handleRemoveItemFromCart(){
+        removeCoffeeFromCart(data.id)
+    }
+
+
     return(
         <CoffeeInCartContainer>
-            <img src={CoffeeImg} />
+            <img src={data.image} />
             <div>
-                <p>Café Tradicional</p>
+                <p>{data.name}</p>
                 <div>
-                    <InputNumber />
-                    <RemoveButton>
+                    <InputNumber useForm={false} currentValue={data.quantity} coffeeId={data.id}/>
+                    <RemoveButton onClick={handleRemoveItemFromCart} type="button">
                         <Trash size={16} />
                         REMOVER
                     </RemoveButton>
                 </div>
             </div>
             <span>
-                R$ 9,90
+                R$ {(Number(data.price) * Number(data.quantity)).toFixed(2)}
             </span>
         </CoffeeInCartContainer>
     )

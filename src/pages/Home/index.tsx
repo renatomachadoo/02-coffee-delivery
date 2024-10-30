@@ -1,3 +1,6 @@
+import { useContext } from "react"
+import { CoffeesContext } from "../../contexts/CoffeeContext"
+
 import { HomeContainer, AboutContainer, CoffeeGrid } from "./styles"
 
 import coffeeDeliveryBanner from "../../assets/coffee-delivery-banner.svg"
@@ -8,6 +11,8 @@ import { ShoppingCart, Timer, Package, Coffee } from "@phosphor-icons/react"
 import { CoffeeCard } from "./Components/CoffeeCard"
 
 export function Home(){
+    const { coffees } = useContext(CoffeesContext)
+
     return(
         <HomeContainer>
             <AboutContainer>
@@ -44,11 +49,11 @@ export function Home(){
             <CoffeeGrid>
                 <h2>Nossos cafés</h2>
                 <main>
-                    <CoffeeCard />
-                    <CoffeeCard />
-                    <CoffeeCard />
-                    <CoffeeCard />
-                    <CoffeeCard />
+                    {
+                        coffees.map(coffee => {
+                            return <CoffeeCard key={coffee.id} coffee={coffee} />
+                        })
+                    }
                 </main>
             </CoffeeGrid>
         </HomeContainer>

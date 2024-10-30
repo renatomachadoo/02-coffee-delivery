@@ -19,7 +19,7 @@ export const CoffeeContainer = styled.div`
 
     > img {
         margin-top: -1.25rem;
-        width: 7.5rem;
+        height: 7.5rem;
     }
 
     .badges{
@@ -64,7 +64,7 @@ export const CoffeeContainer = styled.div`
             }
         }
 
-        > div{
+        > form {
             display: flex;
             align-items: center;
             gap: 0.5rem;

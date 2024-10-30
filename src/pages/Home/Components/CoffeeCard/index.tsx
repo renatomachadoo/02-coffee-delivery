@@ -1,37 +1,74 @@
+import { useContext } from "react";
+import { CoffeesContext } from "../../../../contexts/CoffeeContext";
+
 import { CoffeeContainer, Badge, AddCartButton } from "./styles";
 import { InputNumber } from "../../../../components/InputNumber";
 
-import coffeeImage from "../../../../assets/coffees/Coffee.svg"
-
 import { ShoppingCartSimple } from "@phosphor-icons/react";
 
-export function CoffeeCard(){
+import { Coffee } from "../../../../contexts/CoffeeContext";
+
+import { FormProvider, useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import * as zod from "zod"
+
+const addItemToCartFormValidationSchema = zod.object({
+    quantity: zod.number().min(1),
+    coffeeId: zod.string().min(1)
+})
+
+interface CoffeeCardProps{
+    coffee: Coffee,
+}
+
+type AddItemToCartData = zod.infer<typeof addItemToCartFormValidationSchema>
+
+export function CoffeeCard({coffee} : CoffeeCardProps){
+    const { addCoffeeToCart } = useContext(CoffeesContext)
+
+    const addItemToCartForm = useForm<AddItemToCartData>({
+        resolver: zodResolver(addItemToCartFormValidationSchema),
+        defaultValues: {
+            quantity: 1,
+            coffeeId: coffee.id
+        }
+    })
+
+    const { handleSubmit, reset, register } = addItemToCartForm
+
+    function handleAddItemToCart(data : AddItemToCartData){
+        addCoffeeToCart(data)
+        reset()
+    }
+
     return(
         <CoffeeContainer>
-            <img src={coffeeImage} alt="Café Tradicional" />
+            <img src={coffee.image} alt={coffee.name} />
             <div className="badges">
-                <Badge>
-                    Tradicional
-                </Badge>
-                <Badge>
-                    Gelato
-                </Badge>
+                {
+                    coffee.tags.map(tag => {
+                        return <Badge key={tag}>{tag}</Badge>
+                    })
+                }
             </div>
-            <h3>Expresso Tradicional</h3>
-            <p>O tradicional café feito com água quente e grãos moídos</p>
+            <h3>{coffee.name}</h3>
+            <p>{coffee.description}</p>
             <div className="actions">
                 <p>
                     R$ 
                     <span>
-                        9,90
+                        {coffee.price}
                     </span>
                 </p>
-                <div>
-                    <InputNumber/>
+                <form onSubmit={handleSubmit(handleAddItemToCart)}>
+                    <FormProvider {...addItemToCartForm}>
+                        <InputNumber/>
+                    </FormProvider>
+                    <input type="text" readOnly hidden {...register("coffeeId")}/>
                     <AddCartButton>
                         <ShoppingCartSimple size={22} weight="fill"/>
                     </AddCartButton>
-                </div>
+                </form>
             </div>
         </CoffeeContainer>
     )

@@ -1,9 +1,12 @@
+import { useContext, useEffect } from "react"
+import { CoffeesContext } from "../../contexts/CoffeeContext"
 import { useNavigate } from "react-router-dom"
 import { HeaderContainer, LocationButton, CartButton } from "./styles"
 import { MapPin, ShoppingCart } from "@phosphor-icons/react"
 import coffeeDeliveryLogo from "../../assets/coffee-delivery-logo.svg"
 
 export function Header(){
+    const {itemsInCart} = useContext(CoffeesContext)
     const navigate = useNavigate()
 
     function handleNavigateToHomePage(){
@@ -13,6 +16,12 @@ export function Header(){
     function handleNavigateToCheckoutPage(){
         navigate("/checkout")
     }
+
+    const quantityInCart = itemsInCart.reduce((quantity, currentItem) => quantity + currentItem.quantity, 0)
+
+    useEffect(() => {
+        console.log(itemsInCart)
+    }, [itemsInCart])
 
     return (
         <HeaderContainer>
@@ -24,9 +33,11 @@ export function Header(){
                 </LocationButton>
                 <CartButton title="View Cart" onClick={handleNavigateToCheckoutPage}>
                     <ShoppingCart size={22} weight="fill" />
-                    <span>
-                        3
-                    </span>
+                    {quantityInCart > 0 && (
+                        <span>
+                            {quantityInCart <= 9 ? quantityInCart : "9+"}
+                        </span>
+                    )}
                 </CartButton>
             </div>
         </HeaderContainer>
