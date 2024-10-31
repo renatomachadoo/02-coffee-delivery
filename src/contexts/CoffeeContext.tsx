@@ -1,4 +1,4 @@
-import { createContext, ReactNode, useReducer } from "react";
+import { createContext, ReactNode, useEffect, useReducer } from "react";
 
 import CafeTradicional from "../assets/coffees/tradicional.svg"
 import Americano from "../assets/coffees/americano.svg"
@@ -168,7 +168,18 @@ export function CoffeesContextProvider({
       cartReducer,{
         itemsInCart: [],
         finishedOrder: {}
-      }
+      },
+      (initialState) => {
+        const itemsStateAsJSON = localStorage.getItem(
+          '@coffee-delivery:items-state-1.0.0',
+        )
+
+        if(itemsStateAsJSON){
+          return JSON.parse(itemsStateAsJSON)
+        }
+
+        return initialState
+      },
     )
 
     const { itemsInCart, finishedOrder } = itemsInCartState
@@ -192,6 +203,11 @@ export function CoffeesContextProvider({
       dispatch(finishOrder(data, paymentMethod))
     }
   
+    useEffect(() => {
+      const itemsStateJSON = JSON.stringify(itemsInCartState)
+      localStorage.setItem('@coffee-delivery:items-state-1.0.0', itemsStateJSON)
+    }, [itemsInCartState])
+
     return (
       <CoffeesContext.Provider
         value={{

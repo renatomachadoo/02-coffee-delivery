@@ -19,10 +19,6 @@ export function Header(){
 
     const quantityInCart = itemsInCart.reduce((quantity, currentItem) => quantity + currentItem.quantity, 0)
 
-    useEffect(() => {
-        console.log(itemsInCart)
-    }, [itemsInCart])
-
     return (
         <HeaderContainer>
             <img title="Homepage" onClick={handleNavigateToHomePage} src={coffeeDeliveryLogo} alt="Um copo roxo de café com o texto Coffee Delivery" />

@@ -53,6 +53,13 @@ export function cartReducer(state: CartState, action: any){
                 return state
             }
 
+            if(action.payload.quantity === 0){
+                const newItemCartData = state.itemsInCart.filter(item => item.coffeeId !== action.payload.coffeeId)
+                return produce(state, (draft) => {
+                    draft.itemsInCart = newItemCartData
+                })  
+            }
+
             return produce(state, (draft) => {
                 draft.itemsInCart[itemInCartIndex].quantity = action.payload.quantity
             })
