@@ -15,8 +15,9 @@ import Havaiano from "../assets/coffees/havaiano.svg"
 import Arabe from "../assets/coffees/arabe.svg"
 import Irlandes from "../assets/coffees/irlandes.svg"
 
-import { cartReducer, ItemInCart } from "../reducers/cart/reducer";
-import { addItemToCart, removeItemFromCart, updateItemQuantity } from "../reducers/cart/actions";
+import { cartReducer, ItemInCart, FinishedOrder } from "../reducers/cart/reducer";
+import { addItemToCart, removeItemFromCart, updateItemQuantity, finishOrder } from "../reducers/cart/actions";
+import { CheckoutData } from "../pages/Checkout";
 
 export interface Coffee {
   id: string
@@ -32,8 +33,10 @@ interface CoffeesContextType {
   coffees: Coffee[]
   itemsInCart: ItemInCart[]
   addCoffeeToCart: ({quantity, coffeeId} : ItemInCart) => void
+  finishedOrder: FinishedOrder
   removeCoffeeFromCart: (coffeeId: string) => void
   updateCoffeeQuantityInCart: (coffeeId : string, quantity : number) => void
+  finishCurrentOrder: (data: CheckoutData, paymentMethod : string) => void
 }
 
 export const CoffeesContext = createContext({} as CoffeesContextType)
@@ -168,7 +171,7 @@ export function CoffeesContextProvider({
       }
     )
 
-    const { itemsInCart } = itemsInCartState
+    const { itemsInCart, finishedOrder } = itemsInCartState
 
     function addCoffeeToCart(data : ItemInCart){
       dispatch(addItemToCart({
@@ -184,15 +187,21 @@ export function CoffeesContextProvider({
     function updateCoffeeQuantityInCart(coffeeId : string, quantity : number){
       dispatch(updateItemQuantity(coffeeId, quantity))
     }
+
+    function finishCurrentOrder(data : CheckoutData, paymentMethod : string){
+      dispatch(finishOrder(data, paymentMethod))
+    }
   
     return (
       <CoffeesContext.Provider
         value={{
           itemsInCart,
+          finishedOrder,
           coffees,
           addCoffeeToCart,
           removeCoffeeFromCart,
-          updateCoffeeQuantityInCart
+          updateCoffeeQuantityInCart,
+          finishCurrentOrder
         }}
       >
         {children}

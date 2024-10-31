@@ -23,14 +23,14 @@ const checkoutFormValidationSchema = zod.object({
     state: zod.string().min(1)
 })
 
-type CheckoutData = zod.infer<typeof checkoutFormValidationSchema>
+export type CheckoutData = zod.infer<typeof checkoutFormValidationSchema>
 
-type PaymentMethod = "credit_card" | "debit_card" | "cash" | ""
+type PaymentMethod = "Cartão de crédito" | "Cartão de débito" | "Dinheiro" | ""
 
 export function Checkout(){
     const navigate = useNavigate()
     const [paymentMethod, setPaymentMethod] = useState<PaymentMethod>("")
-    const { coffees, itemsInCart } = useContext(CoffeesContext)
+    const { coffees, itemsInCart, finishCurrentOrder } = useContext(CoffeesContext)
 
     const checkoutForm = useForm<CheckoutData>({
         resolver: zodResolver(checkoutFormValidationSchema),
@@ -48,11 +48,11 @@ export function Checkout(){
     const { handleSubmit, reset } = checkoutForm
 
     function handleFinishCheckout(data : CheckoutData){
-        console.log(data)
-
         if(!paymentMethod){
             return alert("Selecione o método de pagamento!")
         }
+
+        finishCurrentOrder(data, paymentMethod)
 
         reset()
         navigate("/success")
@@ -115,15 +115,15 @@ export function Checkout(){
                             </div>
                         </header>
                         <div className="payment-method">
-                            <button type="button" onClick={() => setPaymentMethod("credit_card")} className={paymentMethod === "credit_card" ? "payment-method-selected" : ""}>
+                            <button type="button" onClick={() => setPaymentMethod("Cartão de crédito")} className={paymentMethod === "Cartão de crédito" ? "payment-method-selected" : ""}>
                                 <CreditCard size={16} />
                                 Cartão de crédito
                             </button>
-                            <button type="button" onClick={() => setPaymentMethod("debit_card")} className={paymentMethod === "debit_card" ? "payment-method-selected" : ""}>
+                            <button type="button" onClick={() => setPaymentMethod("Cartão de débito")} className={paymentMethod === "Cartão de débito" ? "payment-method-selected" : ""}>
                                 <Bank size={16} />
                                 Cartão de débito
                             </button>
-                            <button type="button" onClick={() => setPaymentMethod("cash")} className={paymentMethod === "cash" ? "payment-method-selected" : ""}>
+                            <button type="button" onClick={() => setPaymentMethod("Dinheiro")} className={paymentMethod === "Dinheiro" ? "payment-method-selected" : ""}>
                                 <Money size={16} />
                                 Dinheiro
                             </button>

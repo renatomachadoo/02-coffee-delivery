@@ -1,13 +1,20 @@
 import { produce } from "immer";
 import { ActionTypes } from "./actions";
+import { CheckoutData } from "../../pages/Checkout";
 
 export interface ItemInCart {
     coffeeId: string,
     quantity: number
 }
 
+export interface FinishedOrder {
+    data: CheckoutData,
+    paymentMethod: string
+}
+
 interface CartState {
     itemsInCart: ItemInCart[]
+    finishedOrder: FinishedOrder
 }
 
 export function cartReducer(state: CartState, action: any){
@@ -48,6 +55,13 @@ export function cartReducer(state: CartState, action: any){
 
             return produce(state, (draft) => {
                 draft.itemsInCart[itemInCartIndex].quantity = action.payload.quantity
+            })
+        }
+        case ActionTypes.FINISH_ORDER: {
+            return produce(state, (draft) => {
+                draft.itemsInCart = []
+                draft.finishedOrder.data = action.payload.data
+                draft.finishedOrder.paymentMethod = action.payload.paymentMethod
             })
         }
         default: 

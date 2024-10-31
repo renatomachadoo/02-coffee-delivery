@@ -1,3 +1,6 @@
+import { useContext } from "react"
+import { CoffeesContext } from "../../contexts/CoffeeContext"
+
 import { SuccessContainer } from "./styles"
 
 import { BackgroundIcon } from "../../components/BackgroundIcon"
@@ -7,6 +10,8 @@ import { MapPin, Timer, CurrencyDollar } from "@phosphor-icons/react"
 import Illustration from "../../assets/success-illustration.svg"
 
 export function Success(){
+    const { finishedOrder } = useContext(CoffeesContext)
+
     return(
         <SuccessContainer>
             <div className="title">
@@ -19,8 +24,8 @@ export function Success(){
                         <div>
                             <BackgroundIcon icon={MapPin} backgroundColor="purple" weight="fill" />
                             <div className="text">
-                                <p>Entrega em <strong>Rua João Daniel Martinelli, 102</strong></p>
-                                <span>Farrapos - Porto Alegre, RS</span>
+                                <p>Entrega em <strong>{finishedOrder.data?.street}, {finishedOrder.data?.number}</strong></p>
+                                <span>{finishedOrder.data?.neighborhood} - {finishedOrder.data?.city}, {finishedOrder.data?.state}</span>
                             </div>
                         </div>
                         <div>
@@ -34,7 +39,7 @@ export function Success(){
                             <BackgroundIcon icon={CurrencyDollar} backgroundColor="darkYellow" />
                             <div className="text">
                                 <p>Pagamento na entrega</p>
-                                <span><strong>Cartão de crédito</strong></span>
+                                <span><strong>{finishedOrder?.paymentMethod}</strong></span>
                             </div>
                         </div>
                     </div>

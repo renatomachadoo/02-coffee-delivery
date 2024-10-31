@@ -1,9 +1,11 @@
+import { CheckoutData } from "../../pages/Checkout";
 import { ItemInCart } from "./reducer";
 
 export enum ActionTypes {
     ADD_ITEM_TO_CART = "ADD_ITEM_TO_CART",
     REMOVE_ITEM_FROM_CART = "REMOVE_ITEM_FROM_CART",
-    UPDATE_ITEM_QUANTITY = "UPDATE_ITEM_QUANTITY"
+    UPDATE_ITEM_QUANTITY = "UPDATE_ITEM_QUANTITY",
+    FINISH_ORDER = "FINISH_ORDER"
 }
 
 export function addItemToCart({quantity, coffeeId}: ItemInCart){
@@ -31,6 +33,16 @@ export function updateItemQuantity(coffeeId : string, quantity : number){
         payload:{
             coffeeId,
             quantity
+        }
+    }
+}
+
+export function finishOrder(data: CheckoutData, paymentMethod: string){
+    return {
+        type: ActionTypes.FINISH_ORDER,
+        payload:{
+            data,
+            paymentMethod
         }
     }
 }
